@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
-export abstract class FirestoreServices<T> {
+export abstract class FirestoreService<T> {
     protected abstract basePath: string;
 
     constructor(
