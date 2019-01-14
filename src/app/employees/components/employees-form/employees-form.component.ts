@@ -11,9 +11,38 @@ import { Observable } from 'rxjs';
 })
 export class EmployeesFormComponent implements OnInit {
 
-  constructor() { }
+  form: FormGroup = new FormGroup({
+    name: new FormControl('', Validators.required),
+    location: new FormControl('', Validators.required),
+    hasDriverLicense: new FormControl(false)
+  });
+
+  locations = [
+    'Rosario',
+    'Buenos Aires',
+    'Bariloche'
+  ]
+
+  status$: Observable<string>;
+
+  constructor(
+    private employees: EmployeesService
+  ) { }
 
   ngOnInit() {
+    this.status$ = this.employees.formStatus$;
+  }
+
+  isInvalid(name) {
+    return this.form.controls[name].invalid
+      && (this.form.controls[name].dirty || this.form.controls[name].touched)
+  }
+
+  async submit() {
+    this.form.disable();
+    await this.employees.create({ ...this.form.value })
+    this.form.reset();
+    this.form.enable();
   }
 
 }
