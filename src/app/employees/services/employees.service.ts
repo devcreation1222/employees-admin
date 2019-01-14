@@ -19,6 +19,9 @@ export class EmployeesService {
         this.store.patch({
           loading: false,
           employees,
+          totalEmployees: employees.length,
+          totalDrivers: employees.filter(employee => employee.hasDriverLicense).length,
+          totalRosarioEmployees: employees.filter(employee => employee.location === 'Rosario').length,
         }, `employees collection subscription`)
       })
     ).subscribe()
@@ -46,6 +49,18 @@ export class EmployeesService {
 
   get formStatus$(): Observable<string> {
     return this.store.state$.pipe(map(state => state.formStatus))
+  }
+
+  get totalEmployee$(): Observable<number> {
+    return this.store.state$.pipe(map(state => state.totalEmployees));
+  }
+
+  get totalDrivers$(): Observable<number> {
+    return this.store.state$.pipe(map(state => state.totalDrivers));
+  }
+
+  get totalRosarioEmployee$(): Observable<number> {
+    return this.store.state$.pipe(map(state => state.totalRosarioEmployees))
   }
 
   create(employee: Employee) {

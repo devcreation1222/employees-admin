@@ -12,6 +12,8 @@ export class EmployeesPageStore extends StoreService<EmployeesPage> {
         super({
             loading: true,
             employees: [],
+            totalDrivers: 0,
+            totalRosarioEmployees: 0
         })
     }
 }
